@@ -8,10 +8,17 @@ var timerEl = document.querySelector("#timer");
 var quizEl = document.querySelector("#quiz");
 var quizIntroEl = document.querySelector("#quiz-intro");
 var startButton = document.querySelector("#start-button");
+var rightAnswerEl = document.querySelector("#right");
+var wrongAnswerEl = document.querySelector("#wrong");
+var scoreEl = document.querySelector("#score-text");
+var initialsEl = document.querySelector("#intials");
+var submitInitialsEl = document.querySelector("#submit-initials");
 
 var timer;
 var timerCount;
 var answerSelected;
+var isCorrect;
+var score = 0;
 var i = 0;
 var j = 0;
 
@@ -36,7 +43,7 @@ var quizQuestions = [
             3: "Answer 2c",
             4: "Answer 2d"
         },
-        correctAnswer: 2
+        correctAnswer: "Answer 2b"
     },
     {
         question: "this is question 3",
@@ -46,7 +53,7 @@ var quizQuestions = [
             3: "Answer 3c",
             4: "Answer 3d"
         },
-        correctAnswer: 1
+        correctAnswer: "Answer 3d"
     },
     {
         question: "this is question 4",
@@ -56,7 +63,7 @@ var quizQuestions = [
             3: "Answer 4c",
             4: "Answer 4d"
         },
-        correctAnswer: 3
+        correctAnswer: "Answer 4a"
     },
     {
         question: "this is question 5",
@@ -66,62 +73,86 @@ var quizQuestions = [
             3: "Answer 5c",
             4: "Answer 5d"
         },
-        correctAnswer: 3
+        correctAnswer: "Answer 5a"
     }
 
 ];
 
 //starts the quiz, hides the quiz intro and shows the first question
 function startQuiz() {
+    displayQuestions();
+    quizIntroEl.hidden = true;
+    quizEl.hidden = false;
+    timerCount = 90;
+    startTimer();
+};
+
+// displays the next question in the quiz
+function displayQuestions() {
     questionEl.textContent = quizQuestions[i].question;
     answer1El.textContent = quizQuestions[i].answers[1];
     answer2El.textContent = quizQuestions[i].answers[2];
     answer3El.textContent = quizQuestions[i].answers[3];
     answer4El.textContent = quizQuestions[i].answers[4];
-
-    quizIntroEl.hidden = true;
-    quizEl.hidden = false;
-    timer = 60;
+}
 
 
-    startTimer();
-};
-
-
-
-//check user selected answer to correct answer
+//check user selected answer compared to correct answer
 function checkAnswer() {
+    rightAnswerEl.hidden = true;
+    wrongAnswerEl.hidden = true;
     if (quizQuestions[i].correctAnswer === answerSelected) {
-        console.log("you are right");
-        i++;
+        rightAnswerEl.hidden = false;
+        isCorrect = true;
         console.log(i);
+        displayNextQuestion();
     } else {
-        console.log("you are wrong");
-        i++;
+        wrongAnswerEl.hidden = false;
+        isCorrect = false;
+        timerCount = timerCount - 10;
         console.log(i);
     }
 };
 
+// iterates to decide what question to show next
+function displayNextQuestion() {
+    i++;
+    displayQuestions();
+};
 
 
-// Starting and stopping the timer 
+
+// Starting and stopping the timer when the quiz is complete or the timer runs out
 function startTimer() {
     timer = setInterval(function() {
+        timerEl = document.querySelector("#timer");
         timerEl.textContent = "Time: " + timerCount;
-        timerCount--;
+        timerCount -= 1;
+        if (timerCount >= 0) {
+            if (isCorrect && timerCount > 0) {
+            }
+        } if (timerCount === 0) {
+            endQuiz();
+            clearInterval(timer);
+
+        }
     }, 1000);
 };
 
-function clearInterval() {
+function endQuiz() {
 
-};
+}
+
 
 //add event listener to the start button 
-startButton.addEventListener("click", startQuiz);
+startButton.addEventListener("click", () => {   
+    console.log("debug");
+    startQuiz();
+});
 
 // add event listener to answer choices
-  answerChoicesEl.addEventListener("click", (e) => {
-      answerSelected = e.target.textContent;
+  answerChoicesEl.addEventListener("click", (event) => {
+      answerSelected = event.target.textContent;
       console.log(answerSelected);
       checkAnswer();
-  })
+  });
