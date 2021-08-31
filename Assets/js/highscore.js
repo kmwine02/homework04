@@ -8,7 +8,7 @@ function showScores() {
 
 
   if (scores) {
-    scores.sort((a, b) => {
+    scores = scores.sort((a, b) => {
         return b.score - a.score;
       });
 
