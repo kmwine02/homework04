@@ -1,4 +1,5 @@
 var questionEl = document.querySelector("#question");
+var answerChoicesEl = document.querySelector("#answer-choices");
 var answer1El = document.querySelector("#answer1");
 var answer2El = document.querySelector("#answer2");
 var answer3El = document.querySelector("#answer3");
@@ -10,11 +11,10 @@ var startButton = document.querySelector("#start-button");
 
 var timer;
 var timerCount;
+var answerSelected;
+var i = 0;
+var j = 0;
 
-// hide the questions until quiz is started
- window.onload = function() {
-     quizEl.style.display = "none";
- }
 
 // define questions and answers for the quiz
 var quizQuestions = [
@@ -26,7 +26,7 @@ var quizQuestions = [
             3: "Answer 1c",
             4: "Answer 1d"
         },
-        correctAnswer: 3
+        correctAnswer: "Answer 1c"
     },
     {
         question: "this is question 2",
@@ -71,19 +71,35 @@ var quizQuestions = [
 
 ];
 
+//starts the quiz, hides the quiz intro and shows the first question
 function startQuiz() {
-    questionEl.textContent = quizQuestions[0].question;
-    answer1El.textContent = quizQuestions[0].answers[1];
-    answer2El.textContent = quizQuestions[0].answers[2];
-    answer3El.textContent = quizQuestions[0].answers[3];
-    answer4El.textContent = quizQuestions[0].answers[4];
+    questionEl.textContent = quizQuestions[i].question;
+    answer1El.textContent = quizQuestions[i].answers[1];
+    answer2El.textContent = quizQuestions[i].answers[2];
+    answer3El.textContent = quizQuestions[i].answers[3];
+    answer4El.textContent = quizQuestions[i].answers[4];
 
-    quizIntroEl.style.display = "none";
-    quizEl.style.display = "block";
+    quizIntroEl.hidden = true;
+    quizEl.hidden = false;
     timer = 60;
 
 
     startTimer();
+};
+
+
+
+//check user selected answer to correct answer
+function checkAnswer() {
+    if (quizQuestions[i].correctAnswer === answerSelected) {
+        console.log("you are right");
+        i++;
+        console.log(i);
+    } else {
+        console.log("you are wrong");
+        i++;
+        console.log(i);
+    }
 };
 
 
@@ -94,7 +110,7 @@ function startTimer() {
         timerEl.textContent = "Time: " + timerCount;
         timerCount--;
     }, 1000);
-}
+};
 
 function clearInterval() {
 
@@ -102,3 +118,10 @@ function clearInterval() {
 
 //add event listener to the start button 
 startButton.addEventListener("click", startQuiz);
+
+// add event listener to answer choices
+  answerChoicesEl.addEventListener("click", (e) => {
+      answerSelected = e.target.textContent;
+      console.log(answerSelected);
+      checkAnswer();
+  })
