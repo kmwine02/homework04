@@ -73,7 +73,7 @@ var quizQuestions = [
       4: "Answer 5d",
     },
     correctAnswer: "Answer 5a",
-  },
+  }
 ];
 
 //starts the quiz, hides the quiz intro and shows the first question
