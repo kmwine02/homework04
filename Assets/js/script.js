@@ -118,7 +118,6 @@ function checkAnswer() {
 // iterates to decide what question to show next
 function displayNextQuestion() {
   if (i < quizQuestions.length - 1) {
-    console.log(quizQuestions.length);
     i++;
     displayQuestions();
   } else {
@@ -158,11 +157,11 @@ function saveScores() {
 
         var scoreDetails = {
             initials: initials,
-            score: score,
-            activeScore: false
+            score: score
         };
 
         scores.push(scoreDetails);
+
 
         localStorage.setItem("scores", JSON.stringify(scores));
 
