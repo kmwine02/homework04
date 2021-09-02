@@ -1,9 +1,22 @@
 .navbar-items {
-  display: flex;
-  justify-content: space-between;
+  height: 40px;
+  clear: both;
+  padding: 10px;
 }
 
-.nav-link a {
+.navbar-link.hs {
+
+  float: left;
+  width: 40%;
+}
+
+.navbar-link.time {
+  float: right;
+  width: 40%;
+  text-align: right;
+}
+
+.navbar-link a {
   text-decoration: none;
 }
 
