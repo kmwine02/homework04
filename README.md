@@ -8,4 +8,4 @@ View the password generator here:
 and the repository here:
 [GitHub Repository](https://github.com/kmwine02/homework04) 
 
-![Screen capture of the password generator](./assets/images/javascript-quiz.png)
+![Screen capture of the JavaScript Quiz](./assets/images/javascript-quiz.png)
